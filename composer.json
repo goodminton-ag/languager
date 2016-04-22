@@ -1,0 +1,16 @@
+{
+    "name": "goodminton/languager",
+    "description": "Languager is a Magento 1.* module that makes the management of multi-language store more efficient and easier than ever. Install the module and start internationalizing!",
+    "type": "magento-module",
+    "require": {
+        "magento-hackathon/magento-composer-installer": "^3.0"
+    },
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Pierre Bernard",
+            "email": "pierre.bernard@foodspring.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
