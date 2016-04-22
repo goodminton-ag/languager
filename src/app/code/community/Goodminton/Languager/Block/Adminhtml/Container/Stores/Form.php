@@ -21,34 +21,38 @@
  * @copyright   Copyright (c) 2016 Goodminton AG (http://goodminton.ag)
  * @license     https://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
-class Goodminton_Languager_Block_Adminhtml_Categories_Container_Form extends Mage_Adminhtml_Block_Widget_Form
+
+/**
+ * Class Goodminton_Languager_Block_Adminhtml_Container_Stores_Form
+ */
+class Goodminton_Languager_Block_Adminhtml_Container_Stores_Form extends Mage_Adminhtml_Block_Widget_Form
 {
+    /**
+     * @inheritdoc
+     */
     protected function _prepareForm()
     {
         $form = new Varien_Data_Form([
             'id'        => 'edit_form',
             'method'    => 'post',
-            'action'    => $this->getUrl('*/*/saveCategories')
+            'action'    => $this->getUrl('*/*/saveStores')
         ]);
 
-        $fieldset = $form->addFieldset('attributes', [
-            'label'     => 'Attribute that will be translated',
+        $fieldset = $form->addFieldset('stores', [
+            'legend'     => Mage::helper('goodminton_languager')->__('Store/Language mapping'),
             'class'     => 'required-entry',
             'required'  => true,
-            'name'      => 'categories_attributes',
+            'name'      => 'stores',
         ]);
 
-        /** @var Mage_Catalog_Model_Resource_Category_Attribute_Collection $attributeCollection */
-        $attributeCollection = Mage::getResourceModel('catalog/category_attribute_collection');
-        $attributeCollection->addFilter('is_visible', 1);
-        $attributes = $attributeCollection->getItems();
-        foreach ($attributes as $attribute) {
-            /** @type Mage_Catalog_Model_Resource_Eav_Attribute $attribute */
-            $fieldset->addField('attribute_' . $attribute->getId(), 'checkbox', [
-                'label'     => $attribute->getFrontendLabel(),
-                'value'     => 1,
-                'checked'   => $attribute->getData('gl_translated'),
-                'name'      => 'attributes[' . $attribute->getId() . ']'
+        $stores = Mage::getModel('core/store')->getCollection();
+        foreach ($stores as $store) {
+            /** @type Mage_Core_Model_Store $store */
+            $fieldset->addField('store_' . $store->getId(), 'select', [
+                'label'     => $store->getName() . ' (' . $store->getCode() . ')',
+                'values'    => Zend_Locale::getTranslationList('language'),
+                'value'     => $store->getData('gl_language'),
+                'name'      => 'stores[' . $store->getId() . ']'
             ]);
         }
 

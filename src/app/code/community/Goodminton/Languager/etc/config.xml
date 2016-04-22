@@ -35,16 +35,21 @@
                 </setup>
             </languager_setup>
         </resources>
-        <models>
-            <goodminton_languager>
-                <class>Goodminton_Languager_Model</class>
-            </goodminton_languager>
-        </models>
         <blocks>
             <goodminton_languager>
                 <class>Goodminton_Languager_Block</class>
             </goodminton_languager>
         </blocks>
+        <helpers>
+            <goodminton_languager>
+                <class>Goodminton_Languager_Helper</class>
+            </goodminton_languager>
+        </helpers>
+        <models>
+            <goodminton_languager>
+                <class>Goodminton_Languager_Model</class>
+            </goodminton_languager>
+        </models>
     </global>
     <adminhtml>
         <events>

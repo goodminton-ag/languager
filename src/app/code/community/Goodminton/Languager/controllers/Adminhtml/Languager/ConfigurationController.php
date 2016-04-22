@@ -22,95 +22,196 @@
  * @license     https://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 
+/**
+ * Class Goodminton_Languager_Adminhtml_Languager_ConfigurationController
+ */
 class Goodminton_Languager_Adminhtml_Languager_ConfigurationController extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * Display all store views with dropdown to associate language to each of them
+     */
     public function storesAction()
     {
-        $this->initLayout()
-            ->_addContent($this->getLayout()->createBlock('goodminton_languager/adminhtml_stores_container'))
-            ->renderLayout();
+        $this->_initLayout();
+
+        $attributes = [
+            'header_text' => Mage::helper('goodminton_languager')->__('Languager store management'),
+            'mode' => 'container_stores'
+        ];
+
+        $block = $this->getLayout()->createBlock('goodminton_languager/adminhtml_container', 'attributes_block', $attributes);
+
+        $this->_addContent($block);
+
+        $this->renderLayout();
     }
 
+    /**
+     * Save store view/language configuration
+     *
+     * @throws Exception
+     */
     public function saveStoresAction()
     {
-        if ($data = $this->getRequest()->getPost()) {
-            foreach ($data['stores'] as $key => $language) {
-                /** @var Mage_Core_Model_Store $store */
-                $store = Mage::getModel('core/store')->load($key);
-                $store->setData('gl_language', $language);
-                $store->save();
+        try {
+            if ($data = $this->getRequest()->getPost()) {
+
+                $transaction = Mage::getModel('core/resource_transaction');
+
+                foreach ($data['stores'] as $key => $language) {
+                    $store = Mage::getModel('core/store')->load($key);
+                    $store->setData('gl_language', $language);
+                    $transaction->addObject($store);
+                }
+
+                $transaction->save();
+
+                $this->_addSuccess('Stores configuration have been saved');
             }
+        } catch (Exception $e) {
+            $this->_addError($e->getMessage());
         }
-        $this->addSuccess('Stores configuration have been saved');
         $this->_redirectReferer();
     }
 
+    /**
+     * Display all visible product's attributes with checkbox
+     * to define if it's value should be save in other similar languages store
+     */
     public function productsAction()
     {
-        $this->initLayout()
-            ->_addContent($this->getLayout()->createBlock('goodminton_languager/adminhtml_products_container'))
-            ->renderLayout();
+        $this->_initLayout();
+
+        $attributes = [
+            'form' => [
+                'action_path' => '*/*/saveProducts',
+                'resource_model' => 'catalog/product_attribute_collection'
+            ],
+            'header_text' => Mage::helper('goodminton_languager')->__('Languager products attributes management'),
+            'mode' => 'container_attributes'
+        ];
+
+        $block = $this->getLayout()->createBlock('goodminton_languager/adminhtml_container', 'attributes_block', $attributes);
+
+        $this->_addContent($block);
+
+        $this->renderLayout();
     }
 
+    /**
+     * Save checked product's attribute
+     */
     public function saveProductsAction()
     {
         $this->saveAttributes('catalog/product_attribute_collection');
     }
 
+    /**
+     * Display all visible category's attributes with checkbox
+     * to define if it's value should be save in other similar languages store
+     */
     public function categoriesAction()
     {
-        $this->initLayout()
-            ->_addContent($this->getLayout()->createBlock('goodminton_languager/adminhtml_categories_container'))
-            ->renderLayout();
+        $this->_initLayout();
+
+        $attributes = [
+            'form' => [
+                'action_path' => '*/*/saveCategories',
+                'resource_model' => 'catalog/category_attribute_collection'
+            ],
+            'header_text' => Mage::helper('goodminton_languager')->__('Languager categories attributes management'),
+            'mode' => 'container_attributes'
+        ];
+
+        $block = $this->getLayout()->createBlock('goodminton_languager/adminhtml_container', 'attributes_block', $attributes);
+
+        $this->_addContent($block);
+
+        $this->renderLayout();
     }
 
+    /**
+     * Save checked product's attribute
+     */
     public function saveCategoriesAction()
     {
         $this->saveAttributes('catalog/category_attribute_collection');
     }
 
+    /**
+     * Save attribute's configuration
+     *
+     * @param string $attributeType
+     * @throws Exception
+     */
     public function saveAttributes($attributeType)
     {
-        if ($data = $this->getRequest()->getPost()) {
+        try {
+            if ($data = $this->getRequest()->getPost()) {
 
-            /** @var Mage_Catalog_Model_Resource_Product_Attribute_Collection $attributeCollection */
-            $attributeCollection = Mage::getResourceModel($attributeType);
-            $attributeCollection->addFilter('is_visible', 1);
-            $attributeCollection->addFilter('gl_translated', 1);
-            $attributes = $attributeCollection->getItems();
-            foreach ($attributes as $attribute) {
-                /** @type Mage_Catalog_Model_Resource_Eav_Attribute $attribute */
-                $attribute->setData('gl_translated', 0);
-                $attribute->save();
-            }
+                $transaction = Mage::getModel('core/resource_transaction');
 
-            foreach ($data['attributes'] as $key => $translated) {
-                /** @var Mage_Catalog_Model_Resource_Eav_Attribute $attribute */
-                $attribute = Mage::getResourceModel('catalog/eav_attribute')->load($key);
-                $attribute->setData('gl_translated', $translated);
-                $attribute->save();
+                $attributeCollection = Mage::getResourceModel($attributeType);
+                $attributeCollection->addFilter('is_visible', 1);
+                $attributeCollection->addFilter('gl_translated', 1);
+                $attributes = $attributeCollection->getItems();
+                foreach ($attributes as $attribute) {
+                    $attribute->setData('gl_translated', 0);
+                    $transaction->addObject($attribute);
+                }
+
+                foreach ($data['attributes'] as $key => $translated) {
+                    $attribute = Mage::getResourceModel('catalog/eav_attribute')->load($key);
+                    $attribute->setData('gl_translated', $translated);
+                    $transaction->addObject($attribute);
+                }
+
+                $transaction->save();
+
+                $this->_addSuccess('Attributes have been saved');
             }
+        } catch (Exception $e) {
+            $this->_addError($e->getMessage());
         }
-        $this->addSuccess('Attributes have been saved');
         $this->_redirectReferer();
     }
 
-    protected function initLayout()
+    /**
+     * Prepare the layout of the page
+     *
+     * @return $this
+     */
+    protected function _initLayout()
     {
         $this->loadLayout();
         $this->setUsedModuleName('goodminton_languager');
         $this->_setActiveMenu('system');
 
-        $this->_title('Languager');
-        $this->_title('Configuration');
+        $this->_title(Mage::helper('goodminton_languager')->__('Languager'));
+        $this->_title(Mage::helper('goodminton_languager')->__('Configuration'));
 
         return $this;
     }
 
-    protected function addSuccess($message)
+    /**
+     * Add success message in the admin session
+     *
+     * @param string $message
+     */
+    protected function _addSuccess($message)
     {
-        /** @var Mage_Adminhtml_Model_Session $session */
         $session = Mage::getSingleton('adminhtml/session');
-        $session->addSuccess($message);
+        $session->addSuccess(Mage::helper('goodminton_languager')->__($message));
+    }
+
+    /**
+     * Add error message in the admin session
+     *
+     * @param string $message
+     */
+    protected function _addError($message)
+    {
+        $session = Mage::getSingleton('adminhtml/session');
+        $session->addError(Mage::helper('goodminton_languager')->__($message));
     }
 }

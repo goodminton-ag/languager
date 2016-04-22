@@ -21,8 +21,15 @@
  * @copyright   Copyright (c) 2016 Goodminton AG (http://goodminton.ag)
  * @license     https://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
-class Goodminton_Languager_Block_Adminhtml_Products_Container extends Mage_Adminhtml_Block_Widget_Form_Container
+
+/**
+ * Class Goodminton_Languager_Block_Adminhtml_Container
+ */
+class Goodminton_Languager_Block_Adminhtml_Container extends Mage_Adminhtml_Block_Widget_Form_Container
 {
+    /**
+     * Goodminton_Languager_Block_Adminhtml_Container constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -30,8 +37,18 @@ class Goodminton_Languager_Block_Adminhtml_Products_Container extends Mage_Admin
         $this->removeButton('back');
 
         $this->_blockGroup = 'goodminton_languager';
-        $this->_controller = 'adminhtml_products';
-        $this->_mode = 'container';
-        $this->_headerText = 'Languager products attributes management';
+        $this->_controller = 'adminhtml';
+    }
+
+    protected function _prepareLayout()
+    {
+        $this->_headerText = $this->getData('header_text');
+        $this->_mode = $this->getData('mode');
+
+        parent::_prepareLayout();
+        
+        $this->getChild('form')->setData($this->getData('form'));
+        
+        return $this;
     }
 }

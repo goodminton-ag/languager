@@ -28,28 +28,32 @@
 class Goodminton_Languager_Model_Observer
 {
     /**
+     * Propagate translation for a product's attributes
+     *
      * @param Varien_Event_Observer $observer
      */
     public function propagateProductAttributeTranslation(Varien_Event_Observer $observer)
     {
-        /** @var Mage_Catalog_Model_Product $product */
         $product = $observer->getEvent()->getData('product');
 
         $this->propagateAttributeTranslation($product);
     }
 
     /**
+     * Propage translation for a category's attributes
+     *
      * @param Varien_Event_Observer $observer
      */
     public function propagateCategoryAttributeTranslation(Varien_Event_Observer $observer)
     {
-        /** @var Mage_Catalog_Model_Category $category */
         $category = $observer->getEvent()->getData('category');
 
         $this->propagateAttributeTranslation($category);
     }
 
     /**
+     * Propagate translation to all entities's attributes with the similar language
+     *
      * @param Mage_Catalog_Model_Product|Mage_Catalog_Model_Category $entity
      */
     public function propagateAttributeTranslation($entity)
@@ -63,15 +67,14 @@ class Goodminton_Languager_Model_Observer
             return ;
         }
         
-        /** @var Mage_Core_Model_Resource_Store_Collection $stores */
         $stores = Mage::getModel('core/store')->getCollection();
         $stores->addFilter('gl_language', $language);
         $items = $stores->getItems();
         foreach ($items as $store) {
-            /** @type Mage_Core_Model_Store $store */
+            
             $entity->setStoreId($store->getId());
             foreach ($entity->getAttributes() as $attribute) {
-                /** @type Mage_Catalog_Model_Resource_Eav_Attribute $attribute */
+                
                 if ($attribute->getData('gl_translated')) {
                     $entity->setData($attribute->getAttributeCode(), $entity->getData($attribute->getAttributeCode()));
                     $entity->getResource()->saveAttribute($entity, $attribute->getAttributeCode());

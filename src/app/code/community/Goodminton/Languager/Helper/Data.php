@@ -21,17 +21,8 @@
  * @copyright   Copyright (c) 2016 Goodminton AG (http://goodminton.ag)
  * @license     https://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
-class Goodminton_Languager_Block_Adminhtml_Stores_Container extends Mage_Adminhtml_Block_Widget_Form_Container
-{
-    public function __construct()
-    {
-        parent::__construct();
-        
-        $this->removeButton('back');
-        
-        $this->_blockGroup = 'goodminton_languager';
-        $this->_controller = 'adminhtml_stores';
-        $this->_mode = 'container';
-        $this->_headerText = 'Languager store management';
-    }
-}
+
+/**
+ * Class Goodminton_Languager_Helper_Data
+ */
+class Goodminton_Languager_Helper_Data extends Mage_Core_Helper_Abstract {}

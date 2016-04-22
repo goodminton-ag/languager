@@ -21,31 +21,39 @@
  * @copyright   Copyright (c) 2016 Goodminton AG (http://goodminton.ag)
  * @license     https://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
-class Goodminton_Languager_Block_Adminhtml_Stores_Container_Form extends Mage_Adminhtml_Block_Widget_Form
+
+/**
+ * Class Goodminton_Languager_Block_Adminhtml_Container_Attributes_Form
+ */
+class Goodminton_Languager_Block_Adminhtml_Container_Attributes_Form extends Mage_Adminhtml_Block_Widget_Form
 {
+    /**
+     * @inheritdoc
+     */
     protected function _prepareForm()
     {
         $form = new Varien_Data_Form([
             'id'        => 'edit_form',
             'method'    => 'post',
-            'action'    => $this->getUrl('*/*/saveStores')
+            'action'    => $this->getUrl($this->getData('action_path'))
         ]);
 
-        $fieldset = $form->addFieldset('stores', [
-            'label'     => 'Stores/Language mapping',
+        $fieldset = $form->addFieldset('attributes', [
+            'legend'     => Mage::helper('goodminton_languager')->__('Attributes that will be translated'),
             'class'     => 'required-entry',
-            'required'  => true,
-            'name'      => 'stores',
+            'required'  => true
         ]);
-
-        $stores = Mage::getModel('core/store')->getCollection();
-        foreach ($stores as $store) {
-            /** @type Mage_Core_Model_Store $store */
-            $fieldset->addField('store_' . $store->getId(), 'select', [
-                'label'     => $store->getName() . ' (' . $store->getCode() . ')',
-                'values'    => Zend_Locale::getTranslationList('language'),
-                'value'     => $store->getData('gl_language'),
-                'name'      => 'stores[' . $store->getId() . ']'
+        
+        $attributeCollection = Mage::getResourceModel($this->getData('resource_model'));
+        $attributeCollection->addFilter('is_visible', 1);
+        $attributeCollection->setOrder('frontend_label', $attributeCollection::SORT_ORDER_ASC);
+        $attributes = $attributeCollection->getItems();
+        foreach ($attributes as $attribute) {
+            $fieldset->addField('attribute_' . $attribute->getId(), 'checkbox', [
+                'label'     => Mage::helper('goodminton_languager')->__($attribute->getFrontendLabel()),
+                'value'     => 1,
+                'checked'   => $attribute->getData('gl_translated'),
+                'name'      => 'attributes[' . $attribute->getId() . ']'
             ]);
         }
 
