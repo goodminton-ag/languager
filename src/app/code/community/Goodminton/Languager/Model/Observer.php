@@ -70,9 +70,13 @@ class Goodminton_Languager_Model_Observer
         $stores = Mage::getModel('core/store')->getCollection();
         $stores->addFilter('gl_language', $language);
         $items = $stores->getItems();
+        $storesName = [];
         foreach ($items as $store) {
             
             $entity->setStoreId($store->getId());
+
+            $storesName[] = Mage::helper('goodminton_languager')->__($store->getName()) . ' (' . $store->getCode() . ')';
+
             foreach ($entity->getAttributes() as $attribute) {
                 
                 if ($attribute->getData('gl_translated')) {
@@ -81,5 +85,7 @@ class Goodminton_Languager_Model_Observer
                 }
             }
         }
+        $success = Mage::helper('goodminton_languager')->__('Attributes values saved in stores');
+        Mage::getSingleton('adminhtml/session')->addSuccess($success . ' ' . implode(', ', $storesName));
     }
 }

@@ -29,7 +29,7 @@
                     <title>Languager</title>
                     <children>
                         <store_attributes>
-                            <title>Store configuration</title>
+                            <title>Stores configuration</title>
                             <action>adminhtml/languager_configuration/stores</action>
                         </store_attributes>
                         <products_attributes>
