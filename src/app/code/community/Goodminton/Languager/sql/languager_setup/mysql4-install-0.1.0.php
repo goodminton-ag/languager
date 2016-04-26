@@ -23,6 +23,7 @@
  */
 
 /** @var Mage_Sales_Model_Mysql4_Setup $this */
+$this->startSetup();
 
 /** @var Varien_Db_Adapter_Pdo_Mysql $connection */
 $connection = $this->getConnection();
@@ -51,3 +52,5 @@ $connection->addColumn($this->getTable('catalog/eav_attribute'), 'gl_translated'
         'comment'   => 'Define if the attribute should be considered as translated'
     ]
 );
+
+$this->endSetup();

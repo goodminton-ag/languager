@@ -81,6 +81,25 @@
                 </observers>
             </catalog_category_save_after>
         </events>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <goodminton_languager_config>
+                                            <title>Languager</title>
+                                        </goodminton_languager_config>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
     </adminhtml>
     <admin>
         <routers>
@@ -93,5 +112,13 @@
             </adminhtml>
         </routers>
     </admin>
+    <default>
+        <goodminton_languager_config>
+            <developer_options>
+                <jquery>1</jquery>
+                <jquery_ui>1</jquery_ui>
+            </developer_options>
+        </goodminton_languager_config>
+    </default>
 </config>
 

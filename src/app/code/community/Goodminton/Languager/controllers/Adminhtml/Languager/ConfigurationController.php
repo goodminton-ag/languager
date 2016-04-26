@@ -196,9 +196,18 @@ class Goodminton_Languager_Adminhtml_Languager_ConfigurationController extends M
         if ($extraAssets) {
             /** @var Mage_Page_Block_Html_Head $headBlock */
             $headBlock = $this->getLayout()->getBlock('head');
+
+            if (Mage::getStoreConfig('goodminton_languager_config/developer_options/jquery')) {
+                $headBlock->addJs('goodminton/languager/jquery/jquery.js');
+                $headBlock->addJs('goodminton/languager/jquery/jquery-noconflict.js');
+            }
+
             $headBlock->addJs('goodminton/languager/admin.js');
-            $headBlock->addItem('skin_js', 'goodminton/languager/jquery-ui/jquery-ui.min.js');
-            $headBlock->addItem('skin_css', 'goodminton/languager/jquery-ui/jquery-ui.min.css');
+
+            if (Mage::getStoreConfig('goodminton_languager_config/developer_options/jquery_ui')) {
+                $headBlock->addItem('skin_js', 'goodminton/languager/jquery-ui/jquery-ui.min.js');
+                $headBlock->addItem('skin_css', 'goodminton/languager/jquery-ui/jquery-ui.min.css');
+            }
             $headBlock->addItem('skin_css', 'goodminton/languager/css/style.css');
         }
 
