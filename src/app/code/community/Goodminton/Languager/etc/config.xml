@@ -32,6 +32,7 @@
             <languager_setup>
                 <setup>
                     <module>Goodminton_Languager</module>
+                    <class>Mage_Sales_Model_Mysql4_Setup</class>
                 </setup>
             </languager_setup>
         </resources>

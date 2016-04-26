@@ -53,4 +53,31 @@ $connection->addColumn($this->getTable('catalog/eav_attribute'), 'gl_translated'
     ]
 );
 
+/**
+ * Setting standard attribute as 'to translate'
+ */
+$typesAttributes = [
+    Mage_Catalog_Model_Product::ENTITY => [
+        'name',
+        'description',
+        'short_description',
+        'meta_title',
+        'meta_description',
+        'meta_keyword'
+    ],
+    Mage_Catalog_Model_Category::ENTITY => [
+        'name',
+        'description',
+        'meta_title',
+        'meta_description',
+        'meta_keyword'
+    ]
+];
+
+foreach ($typesAttributes as $type => $attributes) {
+    foreach ($attributes as $attribute) {
+        $this->updateAttribute($type, $attribute, 'gl_translated', 1);
+    }
+}
+
 $this->endSetup();
