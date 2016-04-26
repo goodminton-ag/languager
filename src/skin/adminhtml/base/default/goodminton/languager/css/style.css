@@ -1,0 +1,44 @@
+/*
+ *  Goodminton
+ *
+ *  Copyright 2016 Goodminton AG
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *  @package     Goodminton_Languager
+ *  @author      Pierre Bernard <pierre.bernard@foodspring.com>
+ *  @copyright   Copyright (c) 2016 Goodminton AG (http://goodminton.ag)
+ *  @license     https://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
+ */
+
+#languager_attributes table td {
+    width: 50%;
+    padding: 0;
+}
+
+#languager_attributes table td.ui-widget-overlay {
+    position: inherit !important;
+}
+
+#languager_attributes table td li.ui-draggable-handle {
+    border: 1px solid #CCC;
+    border-left: none;
+    border-right: none;
+    padding: 2px;
+    margin: 2px 0;
+    cursor: move;
+}
+
+#languager_attributes form {
+    display: none;
+}

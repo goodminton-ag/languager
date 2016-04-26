@@ -80,7 +80,7 @@ class Goodminton_Languager_Adminhtml_Languager_ConfigurationController extends M
      */
     public function productsAction()
     {
-        $this->_initLayout();
+        $this->_initLayout(true);
 
         $attributes = [
             'form' => [
@@ -112,7 +112,7 @@ class Goodminton_Languager_Adminhtml_Languager_ConfigurationController extends M
      */
     public function categoriesAction()
     {
-        $this->_initLayout();
+        $this->_initLayout(true);
 
         $attributes = [
             'form' => [
@@ -151,11 +151,13 @@ class Goodminton_Languager_Adminhtml_Languager_ConfigurationController extends M
 
                 $transaction = Mage::getModel('core/resource_transaction');
 
+                /** @var Mage_Eav_Model_Resource_Entity_Attribute_Collection $attributeCollection */
                 $attributeCollection = Mage::getResourceModel($attributeType);
                 $attributeCollection->addFilter('is_visible', 1);
                 $attributeCollection->addFilter('gl_translated', 1);
                 $attributes = $attributeCollection->getItems();
                 foreach ($attributes as $attribute) {
+                    /** @type Mage_Catalog_Model_Resource_Eav_Attribute $attribute */
                     $attribute->setData('gl_translated', 0);
                     $transaction->addObject($attribute);
                 }
@@ -179,9 +181,10 @@ class Goodminton_Languager_Adminhtml_Languager_ConfigurationController extends M
     /**
      * Prepare the layout of the page
      *
+     * @param bool $extraAssets
      * @return $this
      */
-    protected function _initLayout()
+    protected function _initLayout($extraAssets = false)
     {
         $this->loadLayout();
         $this->setUsedModuleName('goodminton_languager');
@@ -189,6 +192,15 @@ class Goodminton_Languager_Adminhtml_Languager_ConfigurationController extends M
 
         $this->_title(Mage::helper('goodminton_languager')->__('Languager'));
         $this->_title(Mage::helper('goodminton_languager')->__('Configuration'));
+
+        if ($extraAssets) {
+            /** @var Mage_Page_Block_Html_Head $headBlock */
+            $headBlock = $this->getLayout()->getBlock('head');
+            $headBlock->addJs('goodminton/languager/admin.js');
+            $headBlock->addItem('skin_js', 'goodminton/languager/jquery-ui/jquery-ui.min.js');
+            $headBlock->addItem('skin_css', 'goodminton/languager/jquery-ui/jquery-ui.min.css');
+            $headBlock->addItem('skin_css', 'goodminton/languager/css/style.css');
+        }
 
         return $this;
     }

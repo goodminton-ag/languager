@@ -27,6 +27,12 @@
  */
 class Goodminton_Languager_Block_Adminhtml_Container_Attributes_Form extends Mage_Adminhtml_Block_Widget_Form
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setTemplate('goodminton/languager/attributes.phtml');
+    }
+
     /**
      * @inheritdoc
      */
@@ -43,17 +49,20 @@ class Goodminton_Languager_Block_Adminhtml_Container_Attributes_Form extends Mag
             'class'     => 'required-entry',
             'required'  => true
         ]);
-        
+
+        /** @var Mage_Eav_Model_Resource_Entity_Attribute_Collection $attributeCollection */
         $attributeCollection = Mage::getResourceModel($this->getData('resource_model'));
         $attributeCollection->addFilter('is_visible', 1);
         $attributeCollection->setOrder('frontend_label', $attributeCollection::SORT_ORDER_ASC);
         $attributes = $attributeCollection->getItems();
         foreach ($attributes as $attribute) {
+            /** @type Mage_Catalog_Model_Resource_Eav_Attribute $attribute */
             $fieldset->addField('attribute_' . $attribute->getId(), 'checkbox', [
                 'label'     => Mage::helper('goodminton_languager')->__($attribute->getFrontendLabel()),
                 'value'     => 1,
                 'checked'   => $attribute->getData('gl_translated'),
-                'name'      => 'attributes[' . $attribute->getId() . ']'
+                'name'      => 'attributes[' . $attribute->getId() . ']',
+                'class'     => 'languager_attributes'
             ]);
         }
 

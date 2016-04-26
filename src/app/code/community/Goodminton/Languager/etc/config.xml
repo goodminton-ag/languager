@@ -52,6 +52,15 @@
         </models>
     </global>
     <adminhtml>
+        <translate>
+            <modules>
+                <Goodminton_Languager>
+                    <files>
+                        <default>Goodminton_Languager.csv</default>
+                    </files>
+                </Goodminton_Languager>
+            </modules>
+        </translate>
         <events>
             <catalog_product_save_after>
                 <observers>
