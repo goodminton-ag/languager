@@ -21,9 +21,18 @@
  *  @license     https://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 
+#languager_attributes table {
+    width: 100%;
+    border: none;
+}
+
 #languager_attributes table td {
     width: 50%;
-    padding: 0;
+    padding: 0 23px;
+}
+
+#languager_attributes table td:nth-child(2n+1) {
+    border-right: 1px solid #DDD;
 }
 
 #languager_attributes table td.ui-widget-overlay {
@@ -31,10 +40,8 @@
 }
 
 #languager_attributes table td li.ui-draggable-handle {
-    border: 1px solid #CCC;
-    border-left: none;
-    border-right: none;
-    padding: 2px;
+    background: url('../../../../../default/default/images/fam_leaf.png') no-repeat left center;
+    padding: 2px 2px 2px 20px;
     margin: 2px 0;
     cursor: move;
 }
