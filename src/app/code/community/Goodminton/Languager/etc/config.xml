@@ -103,6 +103,9 @@
     </admin>
     <default>
         <goodminton_languager_config>
+            <languager>
+                <activated>1</activated>
+            </languager>
             <developer_options>
                 <jquery>1</jquery>
                 <jquery_ui>1</jquery_ui>

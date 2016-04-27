@@ -3,5 +3,6 @@
 /src/app/design/adminhtml/default/default/template/goodminton/languager     app/design/adminhtml/default/default/template/goodminton/languager
 /src/app/etc/modules/Goodminton_Languager.xml                               app/etc/modules/Goodminton_Languager.xml
 /src/app/locale/de_DE/Goodminton_Languager.csv                              app/locale/de_DE/Goodminton_Languager.csv
+/src/app/locale/fr_FR/Goodminton_Languager.csv                              app/locale/fr_FR/Goodminton_Languager.csv
 /src/js/goodminton/languager                                                js/goodminton/languager
 /src/skin/adminhtml/base/default/goodminton/languager                       skin/adminhtml/base/default/goodminton/languager

@@ -32,6 +32,9 @@ That's where Languager will make your life easier.
 Simply associate a store-view to a language, configure which attribute are translated text
 and as soon as a configured attribute's value changes, this value will be automatically saved in all store-view associated with the same language.
 
+# International
+The module is available in english german and french. **Feel free to send translation in other languages!**
+
 # Installation
 In your composer.json add the following lines:
 ```
@@ -66,16 +69,18 @@ Three pages for the configuration of the behavior of the module, and one for dev
 
 ![menu](doc/images/menu.png)
 
-Store-views language association are defined under 'Stores configuration'
+Store-views language association are defined under 'Stores configuration'.
 
-To select which attributes have translated values that must be saved in other store-views, use the drag-and-drop interface for products and categories
+To select which attributes have translated values that must be saved in other store-views, use the drag-and-drop interface for products and categories.
 
 ## Developer configuration
 
 ![configuration](doc/images/configuration.png)
 
+You can activate or deactivate the module in this page.
+
 The module uses jQuery and jQuery-UI to make the interface friendlier and pleasanter to use. If you already included jQuery and jQuery-UI into your layout,
-you can there deactivate the inclusion from the module if you experience conflicts
+you can there deactivate the inclusion from the module if you experience conflicts.
 
 **Note: jQuery and jQuery UI are only included in the configuration pages of Languager (Stores configuration, products and categories attributes)**
 
