@@ -28,27 +28,10 @@
 class Goodminton_Languager_Block_Adminhtml_Container extends Mage_Adminhtml_Block_Widget_Form_Container
 {
     /**
-     * Goodminton_Languager_Block_Adminhtml_Container constructor.
+     * @inheritdoc
      */
-    public function __construct()
+    public function getHeaderText()
     {
-        parent::__construct();
-
-        $this->removeButton('back');
-
-        $this->_blockGroup = 'goodminton_languager';
-        $this->_controller = 'adminhtml';
-    }
-
-    protected function _prepareLayout()
-    {
-        $this->_headerText = $this->getData('header_text');
-        $this->_mode = $this->getData('mode');
-
-        parent::_prepareLayout();
-        
-        $this->getChild('form')->setData($this->getData('form'));
-        
-        return $this;
+        return $this->getData('header_text');
     }
 }

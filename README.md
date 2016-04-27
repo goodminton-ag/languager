@@ -6,7 +6,7 @@ The module is delivered under the Apache License, Version 2.0
 
 For more details see the file LICENSE or visit the page [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
-# How it works - Case study
+# How it works - Study case
 Let's say you have a Magento Shop available in 3 countries each in different languages:
 * Germany - German, English
 * France - French, English
@@ -75,7 +75,7 @@ To select which attributes have translated values that must be saved in other st
 ![configuration](doc/images/configuration.png)
 
 The module uses jQuery and jQuery-UI to make the interface friendlier and pleasanter to use. If you already included jQuery and jQuery-UI into your layout,
-you can there deactivate the inclusion from the module if you experience avoid conflict
+you can there deactivate the inclusion from the module if you experience conflicts
 
 **Note: jQuery and jQuery UI are only included in the configuration pages of Languager (Stores configuration, products and categories attributes)**
 

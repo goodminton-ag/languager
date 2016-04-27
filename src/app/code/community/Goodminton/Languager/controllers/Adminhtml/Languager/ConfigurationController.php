@@ -32,18 +32,7 @@ class Goodminton_Languager_Adminhtml_Languager_ConfigurationController extends M
      */
     public function storesAction()
     {
-        $this->_initLayout();
-
-        $attributes = [
-            'header_text' => Mage::helper('goodminton_languager')->__('Languager store management'),
-            'mode' => 'container_stores'
-        ];
-
-        $block = $this->getLayout()->createBlock('goodminton_languager/adminhtml_container', 'attributes_block', $attributes);
-
-        $this->_addContent($block);
-
-        $this->renderLayout();
+        $this->_initLayout('Stores')->renderLayout();
     }
 
     /**
@@ -80,22 +69,7 @@ class Goodminton_Languager_Adminhtml_Languager_ConfigurationController extends M
      */
     public function productsAction()
     {
-        $this->_initLayout(true);
-
-        $attributes = [
-            'form' => [
-                'action_path' => '*/*/saveProducts',
-                'resource_model' => 'catalog/product_attribute_collection'
-            ],
-            'header_text' => Mage::helper('goodminton_languager')->__('Languager products attributes management'),
-            'mode' => 'container_attributes'
-        ];
-
-        $block = $this->getLayout()->createBlock('goodminton_languager/adminhtml_container', 'attributes_block', $attributes);
-
-        $this->_addContent($block);
-
-        $this->renderLayout();
+        $this->_initLayout('Product\'s attributes')->renderLayout();
     }
 
     /**
@@ -112,22 +86,7 @@ class Goodminton_Languager_Adminhtml_Languager_ConfigurationController extends M
      */
     public function categoriesAction()
     {
-        $this->_initLayout(true);
-
-        $attributes = [
-            'form' => [
-                'action_path' => '*/*/saveCategories',
-                'resource_model' => 'catalog/category_attribute_collection'
-            ],
-            'header_text' => Mage::helper('goodminton_languager')->__('Languager categories attributes management'),
-            'mode' => 'container_attributes'
-        ];
-
-        $block = $this->getLayout()->createBlock('goodminton_languager/adminhtml_container', 'attributes_block', $attributes);
-
-        $this->_addContent($block);
-
-        $this->renderLayout();
+        $this->_initLayout('Category\'s attributes')->renderLayout();
     }
 
     /**
@@ -181,10 +140,10 @@ class Goodminton_Languager_Adminhtml_Languager_ConfigurationController extends M
     /**
      * Prepare the layout of the page
      *
-     * @param bool $extraAssets
+     * @param $title
      * @return $this
      */
-    protected function _initLayout($extraAssets = false)
+    protected function _initLayout($title)
     {
         $this->loadLayout();
         $this->setUsedModuleName('goodminton_languager');
@@ -192,24 +151,7 @@ class Goodminton_Languager_Adminhtml_Languager_ConfigurationController extends M
 
         $this->_title(Mage::helper('goodminton_languager')->__('Languager'));
         $this->_title(Mage::helper('goodminton_languager')->__('Configuration'));
-
-        if ($extraAssets) {
-            /** @var Mage_Page_Block_Html_Head $headBlock */
-            $headBlock = $this->getLayout()->getBlock('head');
-
-            if (Mage::getStoreConfig('goodminton_languager_config/developer_options/jquery')) {
-                $headBlock->addJs('goodminton/languager/jquery/jquery.js');
-                $headBlock->addJs('goodminton/languager/jquery/jquery-noconflict.js');
-            }
-
-            $headBlock->addJs('goodminton/languager/admin.js');
-
-            if (Mage::getStoreConfig('goodminton_languager_config/developer_options/jquery_ui')) {
-                $headBlock->addItem('skin_js', 'goodminton/languager/jquery-ui/jquery-ui.min.js');
-                $headBlock->addItem('skin_css', 'goodminton/languager/jquery-ui/jquery-ui.min.css');
-            }
-            $headBlock->addItem('skin_css', 'goodminton/languager/css/style.css');
-        }
+        $this->_title(Mage::helper('goodminton_languager')->__($title));
 
         return $this;
     }

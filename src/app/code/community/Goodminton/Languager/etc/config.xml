@@ -82,6 +82,13 @@
                 </observers>
             </catalog_category_save_after>
         </events>
+        <layout>
+            <updates>
+                <goodminton_languager>
+                    <file>goodminton/languager.xml</file>
+                </goodminton_languager>
+            </updates>
+        </layout>
         <acl>
             <resources>
                 <admin>

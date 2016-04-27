@@ -78,7 +78,7 @@ class Goodminton_Languager_Model_Observer
             $storesName[] = Mage::helper('goodminton_languager')->__($store->getName()) . ' (' . $store->getCode() . ')';
 
             foreach ($entity->getAttributes() as $attribute) {
-                
+                /** @type Mage_Catalog_Model_Resource_Eav_Attribute $attribute */
                 if ($attribute->getData('gl_translated')) {
                     $entity->setData($attribute->getAttributeCode(), $entity->getData($attribute->getAttributeCode()));
                     $entity->getResource()->saveAttribute($entity, $attribute->getAttributeCode());

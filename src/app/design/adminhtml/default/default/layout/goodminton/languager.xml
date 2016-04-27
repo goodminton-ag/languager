@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<!--
+  * Goodminton
+  *
+  * Copyright 2016 Goodminton AG
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at
+  *
+  *   http://www.apache.org/licenses/LICENSE-2.0
+  *
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
+  * @package     Goodminton_Languager
+  * @author      Pierre Bernard <pierre.bernard@foodspring.com>
+  * @copyright   Copyright (c) 2016 Goodminton AG (http://goodminton.ag)
+  * @license     https://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
+  -->
+<layout>
+    <adminhtml_languager_configuration_stores>
+
+        <reference name="content">
+            <block type="goodminton_languager/adminhtml_container" name="stores_block">
+                <action method="setData" translate="value">
+                    <name>header_text</name>
+                    <value>Languager store management</value>
+                </action>
+                <block type="goodminton_languager/adminhtml_container_stores_form" name="form" as="form"/>
+            </block>
+        </reference>
+
+    </adminhtml_languager_configuration_stores>
+
+    <adminhtml_languager_configuration_products>
+
+        <reference name="head">
+            <action method="addJs" ifconfig="goodminton_languager_config/developer_options/jquery">
+                <name>goodminton/languager/jquery/jquery.js</name>
+            </action>
+            <action method="addJs" ifconfig="goodminton_languager_config/developer_options/jquery">
+                <name>goodminton/languager/jquery/jquery-noconflict.js</name>
+            </action>
+
+            <action method="addItem" ifconfig="goodminton_languager_config/developer_options/jquery_ui">
+                <type>skin_js</type>
+                <name>goodminton/languager/jquery-ui/jquery-ui.min.js</name>
+            </action>
+            <action method="addItem" ifconfig="goodminton_languager_config/developer_options/jquery_ui">
+                <type>skin_css</type>
+                <name>goodminton/languager/jquery-ui/jquery-ui.min.css</name>
+            </action>
+
+            <action method="addJs">
+                <name>goodminton/languager/admin.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>goodminton/languager/css/style.css</name>
+            </action>
+        </reference>
+
+        <reference name="content">
+            <block type="goodminton_languager/adminhtml_container" name="attributes_block">
+                <action method="setData" translate="value">
+                    <name>header_text</name>
+                    <value>Languager product's attributes management</value>
+                </action>
+                <block type="goodminton_languager/adminhtml_container_attributes_form" name="form" as="form">
+                    <action method="setData">
+                        <name>action_path</name>
+                        <value>*/*/saveProducts</value>
+                    </action>
+                    <action method="setData">
+                        <name>resource_model</name>
+                        <value>catalog/product_attribute_collection</value>
+                    </action>
+                </block>
+            </block>
+        </reference>
+
+    </adminhtml_languager_configuration_products>
+
+    <adminhtml_languager_configuration_categories>
+
+        <reference name="head">
+            <action method="addJs" ifconfig="goodminton_languager_config/developer_options/jquery">
+                <name>goodminton/languager/jquery/jquery.js</name>
+            </action>
+            <action method="addJs" ifconfig="goodminton_languager_config/developer_options/jquery">
+                <name>goodminton/languager/jquery/jquery-noconflict.js</name>
+            </action>
+
+            <action method="addItem" ifconfig="goodminton_languager_config/developer_options/jquery_ui">
+                <type>skin_js</type>
+                <name>goodminton/languager/jquery-ui/jquery-ui.min.js</name>
+            </action>
+            <action method="addItem" ifconfig="goodminton_languager_config/developer_options/jquery_ui">
+                <type>skin_css</type>
+                <name>goodminton/languager/jquery-ui/jquery-ui.min.css</name>
+            </action>
+
+            <action method="addJs">
+                <name>goodminton/languager/admin.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>goodminton/languager/css/style.css</name>
+            </action>
+        </reference>
+
+        <reference name="content">
+            <block type="goodminton_languager/adminhtml_container" name="attributes_block">
+                <action method="setData" translate="value">
+                    <name>header_text</name>
+                    <value>Languager category's attributes management</value>
+                </action>
+                <block type="goodminton_languager/adminhtml_container_attributes_form" name="form" as="form">
+                    <action method="setData">
+                        <name>action_path</name>
+                        <value>*/*/saveCategories</value>
+                    </action>
+                    <action method="setData">
+                        <name>resource_model</name>
+                        <value>catalog/category_attribute_collection</value>
+                    </action>
+                </block>
+            </block>
+        </reference>
+
+    </adminhtml_languager_configuration_categories>
+</layout>
