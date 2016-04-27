@@ -27,6 +27,25 @@
  */
 class Goodminton_Languager_Adminhtml_Languager_ConfigurationController extends Mage_Adminhtml_Controller_Action
 {
+    protected function _isAllowed()
+    {
+        $action = strtolower($this->getRequest()->getActionName());
+        switch ($action) {
+            case 'stores':
+                return Mage::getSingleton('admin/session')->isAllowed('admin/system/languager/store_attributes');
+                break;
+            case 'products':
+                return Mage::getSingleton('admin/session')->isAllowed('admin/system/languager/products_attributes');
+                break;
+            case 'categories':
+                return Mage::getSingleton('admin/session')->isAllowed('admin/system/languager/categories_attributes');
+                break;
+            default:
+                return Mage::getSingleton('admin/session')->isAllowed('admin/system/languager');
+                break;
+        }
+    }
+
     /**
      * Display all store views with dropdown to associate language to each of them
      */

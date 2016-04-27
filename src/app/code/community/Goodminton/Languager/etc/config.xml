@@ -89,25 +89,6 @@
                 </goodminton_languager>
             </updates>
         </layout>
-        <acl>
-            <resources>
-                <admin>
-                    <children>
-                        <system>
-                            <children>
-                                <config>
-                                    <children>
-                                        <goodminton_languager_config>
-                                            <title>Languager</title>
-                                        </goodminton_languager_config>
-                                    </children>
-                                </config>
-                            </children>
-                        </system>
-                    </children>
-                </admin>
-            </resources>
-        </acl>
     </adminhtml>
     <admin>
         <routers>

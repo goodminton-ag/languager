@@ -25,18 +25,18 @@
     <menu>
         <system>
             <children>
-                <languager>
+                <languager module="goodminton_languager">
                     <title>Languager</title>
                     <children>
-                        <store_attributes>
+                        <store_attributes module="goodminton_languager">
                             <title>Stores configuration</title>
                             <action>adminhtml/languager_configuration/stores</action>
                         </store_attributes>
-                        <products_attributes>
+                        <products_attributes module="goodminton_languager">
                             <title>Products attributes</title>
                             <action>adminhtml/languager_configuration/products</action>
                         </products_attributes>
-                        <categories_attributes>
+                        <categories_attributes module="goodminton_languager">
                             <title>Categories attributes</title>
                             <action>adminhtml/languager_configuration/categories</action>
                         </categories_attributes>
@@ -45,4 +45,38 @@
             </children>
         </system>
     </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <goodminton_languager_config>
+                                        <title>Languager</title>
+                                    </goodminton_languager_config>
+                                </children>
+                            </config>
+                            <languager module="goodminton_languager">
+                                <title>Languager</title>
+                                <sort_order>150</sort_order>
+                                <children>
+                                    <store_attributes module="goodminton_languager">
+                                        <title>Languager stores configuration</title>
+                                    </store_attributes>
+                                    <products_attributes module="goodminton_languager">
+                                        <title>Languager product's attribute configuration</title>
+                                    </products_attributes>
+                                    <categories_attributes module="goodminton_languager">
+                                        <title>Languager category's attribute configuration</title>
+                                    </categories_attributes>
+                                </children>
+                            </languager>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
 </config>
