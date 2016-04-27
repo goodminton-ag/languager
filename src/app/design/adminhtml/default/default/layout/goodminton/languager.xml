@@ -30,6 +30,9 @@
                     <name>header_text</name>
                     <value>Languager store management</value>
                 </action>
+                <action method="removeButton">
+                    <id>back</id>
+                </action>
                 <block type="goodminton_languager/adminhtml_container_stores_form" name="form" as="form"/>
             </block>
         </reference>
@@ -69,6 +72,9 @@
                 <action method="setData" translate="value">
                     <name>header_text</name>
                     <value>Languager product's attributes management</value>
+                </action>
+                <action method="removeButton">
+                    <id>back</id>
                 </action>
                 <block type="goodminton_languager/adminhtml_container_attributes_form" name="form" as="form">
                     <action method="setData">
@@ -118,6 +124,9 @@
                 <action method="setData" translate="value">
                     <name>header_text</name>
                     <value>Languager category's attributes management</value>
+                </action>
+                <action method="removeButton">
+                    <id>back</id>
                 </action>
                 <block type="goodminton_languager/adminhtml_container_attributes_form" name="form" as="form">
                     <action method="setData">
