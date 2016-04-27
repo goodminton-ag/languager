@@ -58,6 +58,10 @@ class Goodminton_Languager_Model_Observer
      */
     public function propagateAttributeTranslation($entity)
     {
+        if (Mage::getStoreConfig('goodminton_languager_config/languager/activated') != 1) {
+            return ;
+        }
+
         if ($entity->getStoreId() === 0) {
             return;
         }
