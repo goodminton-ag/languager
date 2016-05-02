@@ -67,6 +67,9 @@ class Goodminton_Languager_Adminhtml_Languager_ConfigurationController extends M
                 $transaction = Mage::getModel('core/resource_transaction');
 
                 foreach ($data['stores'] as $key => $language) {
+                    if (!$language) {
+                        continue;
+                    }
                     $store = Mage::getModel('core/store')->load($key);
                     $store->setData('gl_language', $language);
                     $transaction->addObject($store);
