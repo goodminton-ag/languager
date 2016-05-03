@@ -45,12 +45,15 @@ class Goodminton_Languager_Block_Adminhtml_Container_Stores_Form extends Mage_Ad
             'name'      => 'stores',
         ]);
 
+        $languages = ["" => Mage::helper('goodminton_languager')->__('*** Chose a language ***')] +
+        	Zend_Locale::getTranslationList('language');
+
         $stores = Mage::getModel('core/store')->getCollection();
         foreach ($stores as $store) {
             /** @type Mage_Core_Model_Store $store */
             $fieldset->addField('store_' . $store->getId(), 'select', [
                 'label'     => $store->getName() . ' (' . $store->getCode() . ')',
-                'values'    => Zend_Locale::getTranslationList('language'),
+                'values'    => $languages,
                 'value'     => $store->getData('gl_language'),
                 'name'      => 'stores[' . $store->getId() . ']'
             ]);
