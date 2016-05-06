@@ -84,8 +84,9 @@ class Goodminton_Languager_Model_Observer
             foreach ($entity->getAttributes() as $attribute) {
                 /** @type Mage_Catalog_Model_Resource_Eav_Attribute $attribute */
                 if ($attribute->getData('gl_translated')) {
-                    $entity->setData($attribute->getAttributeCode(), $entity->getData($attribute->getAttributeCode()));
-                    $entity->getResource()->saveAttribute($entity, $attribute->getAttributeCode());
+                    if ($entity->getData($attribute->getAttributeCode())) {
+                        $entity->getResource()->saveAttribute($entity, $attribute->getAttributeCode());
+                    }
                 }
             }
         }
