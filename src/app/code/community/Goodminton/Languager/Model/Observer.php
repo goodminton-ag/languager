@@ -65,18 +65,14 @@ class Goodminton_Languager_Model_Observer
         if ($entity->getStoreId() === 0) {
             return;
         }
-        
-        $language = $entity->getStore()->getData('gl_language');
-        if (is_null($language)) {
+
+        $items = $this->getSimilarStores($entity->getStore());
+        if (!$items) {
             return ;
         }
-        
-        $stores = Mage::getModel('core/store')->getCollection();
-        $stores->addFilter('gl_language', $language);
-        $items = $stores->getItems();
         $storesName = [];
         foreach ($items as $store) {
-            
+
             $entity->setStoreId($store->getId());
 
             $storesName[] = Mage::helper('goodminton_languager')->__($store->getName()) . ' (' . $store->getCode() . ')';
@@ -92,5 +88,50 @@ class Goodminton_Languager_Model_Observer
         }
         $success = Mage::helper('goodminton_languager')->__('Attributes values saved in stores');
         Mage::getSingleton('adminhtml/session')->addSuccess($success . ' ' . implode(', ', $storesName));
+    }
+
+    /**
+     * Add all store views with similar language to a CMS block
+     *
+     * @param Varien_Event_Observer $observer
+     */
+    public function selectStoreViewForLanguage(Varien_Event_Observer $observer)
+    {
+        $object = $observer->getEvent()->getData('object');
+        if ($object instanceof Mage_Cms_Model_Block) {
+            $newStores = $object->getData('stores');
+            foreach ($object->getData('stores') as $store) {
+                $similarStores = $this->getSimilarStores($store);
+                if (!$similarStores) {
+                    continue ;
+                }
+                foreach ($similarStores as $similarStore) {
+                    if (!in_array($similarStore->getId(), $newStores)) {
+                        $newStores[] = $similarStore->getId();
+                    }
+                }
+            }
+            $object->setData('stores', $newStores);
+        }
+    }
+
+    /**
+     * Get all store with similar language as the one given
+     *
+     * @param Mage_Core_Model_Store|integer $store
+     * @return Mage_Core_Model_Resource_Store_Collection
+     */
+    protected function getSimilarStores($store)
+    {
+        if (!$store instanceof Mage_Core_Model_Store) {
+            $store = Mage::getModel('core/store')->load($store);
+        }
+        $stores = Mage::getModel('core/store')->getCollection();
+        $stores->addFilter('gl_language', $store->getData('gl_language'));
+        $items = $stores->getItems();
+        if (empty($items)) {
+            return false;
+        }
+        return $items;
     }
 }

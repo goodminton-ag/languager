@@ -81,6 +81,15 @@
                     </propagate_translation>
                 </observers>
             </catalog_category_save_after>
+            <model_save_before>
+                <observers>
+                    <propagate_translation>
+                        <type>singleton</type>
+                        <class>goodminton_languager/observer</class>
+                        <method>selectStoreViewForLanguage</method>
+                    </propagate_translation>
+                </observers>
+            </model_save_before>
         </events>
         <layout>
             <updates>
