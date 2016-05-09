@@ -97,11 +97,16 @@ class Goodminton_Languager_Model_Observer
      */
     public function selectStoreViewForLanguage(Varien_Event_Observer $observer)
     {
+        if (Mage::getStoreConfig('goodminton_languager_config/languager/activated') != 1) {
+            return ;
+        }
+
         $object = $observer->getEvent()->getData('object');
         if ($object instanceof Mage_Cms_Model_Block) {
             $newStores = $object->getData('stores');
+            $usedStores = $this->getUsedStore($object->getData('identifier'));
             foreach ($object->getData('stores') as $store) {
-                $similarStores = $this->getSimilarStores($store);
+                $similarStores = $this->getSimilarStores($store, $usedStores);
                 if (!$similarStores) {
                     continue ;
                 }
@@ -119,19 +124,47 @@ class Goodminton_Languager_Model_Observer
      * Get all store with similar language as the one given
      *
      * @param Mage_Core_Model_Store|integer $store
+     * @param array $exclude
      * @return Mage_Core_Model_Resource_Store_Collection
      */
-    protected function getSimilarStores($store)
+    protected function getSimilarStores($store, $exclude)
     {
         if (!$store instanceof Mage_Core_Model_Store) {
             $store = Mage::getModel('core/store')->load($store);
         }
         $stores = Mage::getModel('core/store')->getCollection();
         $stores->addFilter('gl_language', $store->getData('gl_language'));
+        $stores->addFieldToFilter('store_id', ['nin' => $exclude]);
         $items = $stores->getItems();
         if (empty($items)) {
             return false;
         }
         return $items;
+    }
+
+    /**
+     * Get all used store ids for the given block identifier
+     *
+     * @param $blockIdentifier
+     * @return array
+     */
+    protected function getUsedStore($blockIdentifier)
+    {
+        if (($storeIds = Mage::registry('languager_' . $blockIdentifier)) != null) {
+            return $storeIds;
+        }
+        $coreRead = Mage::getSingleton('core/resource')->getConnection('core_read');
+        $select = $coreRead->select()
+            ->from(array('cb' => $coreRead->getTableName('cms_block')), ['cb.block_id'])
+            ->join(
+                array('cbs' => $coreRead->getTableName('cms_block_store')),
+                'cb.block_id = cbs.block_id',
+                ['cbs.store_id']
+            )->where('cb.identifier = ?', $blockIdentifier)
+        ;
+        $stmt = $coreRead->query($select);
+        $storeIds = $stmt->fetchAll(Zend_Db::FETCH_COLUMN, 1);
+        Mage::register('languager_' . $blockIdentifier, $storeIds);
+        return $storeIds;
     }
 }
