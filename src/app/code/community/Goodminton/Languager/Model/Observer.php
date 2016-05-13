@@ -134,7 +134,9 @@ class Goodminton_Languager_Model_Observer
         }
         $stores = Mage::getModel('core/store')->getCollection();
         $stores->addFilter('gl_language', $store->getData('gl_language'));
-        $stores->addFieldToFilter('store_id', ['nin' => $exclude]);
+        if (!empty($exclude)) {
+            $stores->addFieldToFilter('store_id', ['nin' => $exclude]);
+        }
         $items = $stores->getItems();
         if (empty($items)) {
             return false;
@@ -150,7 +152,7 @@ class Goodminton_Languager_Model_Observer
      */
     protected function getUsedStore($blockIdentifier)
     {
-        if (($storeIds = Mage::registry('languager_' . $blockIdentifier)) != null) {
+        if (($storeIds = Mage::registry('languager_' . $blockIdentifier)) !== null) {
             return $storeIds;
         }
         $coreRead = Mage::getSingleton('core/resource')->getConnection('core_read');
