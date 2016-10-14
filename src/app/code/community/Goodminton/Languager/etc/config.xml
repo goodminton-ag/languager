@@ -90,6 +90,15 @@
                     </propagate_translation>
                 </observers>
             </model_save_before>
+            <product_duplicate_attributes>
+                <observers>
+                    <propagate_translation>
+                        <type>singleton</type>
+                        <class>goodminton_languager/observer</class>
+                        <method>preventAttributePropagation</method>
+                    </propagate_translation>
+                </observers>
+            </product_duplicate_attributes>
         </events>
         <layout>
             <updates>

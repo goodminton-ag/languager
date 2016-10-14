@@ -28,6 +28,16 @@
 class Goodminton_Languager_Model_Observer
 {
     /**
+     * Set a flag to deactivate attribute propagation
+     *
+     * @param Varien_Event_Observer $observer
+     */
+    public function preventAttributePropagation(Varien_Event_Observer $observer)
+    {
+        Mage::register('languager_deactivate_propagation', true, true);
+    }
+
+    /**
      * Propagate translation for a product's attributes
      *
      * @param Varien_Event_Observer $observer
@@ -59,6 +69,10 @@ class Goodminton_Languager_Model_Observer
     public function propagateAttributeTranslation($entity)
     {
         if (Mage::getStoreConfig('goodminton_languager_config/languager/activated') != 1) {
+            return ;
+        }
+
+        if (Mage::registry('languager_deactivate_propagation')) {
             return ;
         }
 
@@ -127,7 +141,7 @@ class Goodminton_Languager_Model_Observer
      * @param array $exclude
      * @return Mage_Core_Model_Resource_Store_Collection
      */
-    protected function getSimilarStores($store, $exclude)
+    protected function getSimilarStores($store, $exclude = [])
     {
         if (!$store instanceof Mage_Core_Model_Store) {
             $store = Mage::getModel('core/store')->load($store);
