@@ -94,10 +94,10 @@ class Goodminton_Languager_Model_Observer
             foreach ($entity->getAttributes() as $attribute) {
                 /** @type Mage_Catalog_Model_Resource_Eav_Attribute $attribute */
                 if ($attribute->getData('gl_translated')) {
-                    if ($entity->getData($attribute->getAttributeCode())) {
+                    if (!in_array($attribute->getAttributeCode(), Mage::app()->getRequest()->get('use_default'))) {
                         $entity->getResource()->saveAttribute($entity, $attribute->getAttributeCode());
                     }
-                }
+		}
             }
         }
         $success = Mage::helper('goodminton_languager')->__('Attributes values saved in stores');
