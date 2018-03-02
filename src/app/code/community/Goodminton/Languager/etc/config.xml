@@ -51,17 +51,6 @@
                 <class>Goodminton_Languager_Model</class>
             </goodminton_languager>
         </models>
-        <events>
-            <review_save_before>
-                <observers>
-                    <goodminton_languager>
-                        <type>singleton</type>
-                        <class>goodminton_languager/observer_ratings</class>
-                        <method>mapStores</method>
-                    </goodminton_languager>
-                </observers>
-            </review_save_before>
-        </events>
     </global>
     <adminhtml>
         <translate>
