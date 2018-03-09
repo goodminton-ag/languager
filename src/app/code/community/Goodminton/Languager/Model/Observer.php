@@ -118,6 +118,9 @@ class Goodminton_Languager_Model_Observer
         $object = $observer->getEvent()->getData('object');
         if ($object instanceof Mage_Cms_Model_Block) {
             $newStores = $object->getData('stores');
+            if (!is_array($newStores)) {
+                return;
+            }
             $usedStores = $this->getUsedStore($object->getData('identifier'));
             foreach ($object->getData('stores') as $store) {
                 $similarStores = $this->getSimilarStores($store, $usedStores);
