@@ -26,6 +26,9 @@
         <Goodminton_Languager>
             <active>true</active>
             <codePool>community</codePool>
+            <depends>
+                <Hackathon_MultistoreBlocks/>
+            </depends>
         </Goodminton_Languager>
     </modules>
 </config>

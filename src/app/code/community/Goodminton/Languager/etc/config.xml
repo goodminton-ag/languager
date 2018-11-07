@@ -40,6 +40,11 @@
             <goodminton_languager>
                 <class>Goodminton_Languager_Block</class>
             </goodminton_languager>
+            <adminhtml>
+                <rewrite>
+                    <cms_block_edit>Goodminton_Languager_Block_Adminhtml_Cms_Edit</cms_block_edit>
+                </rewrite>
+            </adminhtml>
         </blocks>
         <helpers>
             <goodminton_languager>
@@ -101,6 +106,15 @@
                     </propagate_translation>
                 </observers>
             </model_save_before>
+            <controller_action_predispatch_adminhtml_cms_block_save>
+                <observers>
+                    <propagate_translation>
+                        <type>singleton</type>
+                        <class>goodminton_languager/observer</class>
+                        <method>controllerActionPredispatchAdminhtmlCmsBlockSave</method>
+                    </propagate_translation>
+                </observers>
+            </controller_action_predispatch_adminhtml_cms_block_save>
             <product_duplicate_attributes>
                 <observers>
                     <propagate_translation>

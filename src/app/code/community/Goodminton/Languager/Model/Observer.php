@@ -62,6 +62,25 @@ class Goodminton_Languager_Model_Observer
     }
 
     /**
+     * Check if propagation is deactivated
+     *
+     * @param Varien_Event_Observer $observer
+     *
+     * @return void
+     */
+    public function controllerActionPredispatchAdminhtmlCmsBlockSave(Varien_Event_Observer $observer)
+    {
+        /* @var Mage_Adminhtml_Cms_BlockController $controllerAction */
+        $controllerAction = $observer->getData('controller_action');
+
+        $blockPropagation = $controllerAction->getRequest()->getPost('block_propagation');
+
+        if ($blockPropagation == 1) {
+            Mage::register('languager_deactivate_propagation', true, true);
+        }
+    }
+
+    /**
      * Propagate translation to all entities's attributes with the similar language
      *
      * @param Mage_Catalog_Model_Product|Mage_Catalog_Model_Category $entity
@@ -112,6 +131,10 @@ class Goodminton_Languager_Model_Observer
     public function selectStoreViewForLanguage(Varien_Event_Observer $observer)
     {
         if (Mage::getStoreConfig('goodminton_languager_config/languager/activated') != 1) {
+            return ;
+        }
+
+        if (Mage::registry('languager_deactivate_propagation')) {
             return ;
         }
 
